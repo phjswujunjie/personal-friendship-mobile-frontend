@@ -5,10 +5,21 @@ import store from './store'
 import Vant from 'vant'
 import 'vant/lib/index.less'
 import axios from 'axios'
+import EmojiSelector from 'vue-emoji-selector'
+import 'vue-emoji-selector/lib/vue-emoji-selector.css'
+import '@/assets/icon/iconfont.css'
+import '@/assets/icon/iconfont1.css'
+import '@/assets/icon/iconfont2.css'
+import '@/assets/icon/iconfont.ttf'
+import 'vue2-animate/dist/vue2-animate.min.css'
+// 使用插件来判断移动端的屏幕左滑和右滑事件
+import Vue2TouchEvents from 'vue2-touch-events'
 
 Vue.config.productionTip = false
 
 Vue.use(Vant)
+Vue.use(EmojiSelector)
+Vue.use(Vue2TouchEvents)
 
 axios.defaults.baseURL = 'http://localhost:8888'
 Vue.prototype.$http = axios

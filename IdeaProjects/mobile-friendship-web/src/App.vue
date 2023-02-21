@@ -2,10 +2,12 @@
   <div id="app">
     <router-view :key="$route.fullPath"/>
 
-    <van-tabbar route :placeholder="true" v-if="(!$route.fullPath.startsWith('/chat/userChat/')) && (exclude.indexOf($route.fullPath) === -1)">
-      <van-tabbar-item replace to="/home" icon="home-o" >首页</van-tabbar-item>
+    <van-tabbar route :placeholder="true" v-if="(!$route.fullPath.startsWith('/chat/'))
+     && (exclude.indexOf($route.fullPath) === -1 && !$route.fullPath.startsWith('/u')
+      && !$route.fullPath.startsWith('/blogComment') && !$route.fullPath.startsWith('/g/'))">
+      <van-tabbar-item replace to="/homepage" icon="home-o" >首页</van-tabbar-item>
       <van-tabbar-item replace to="/search" icon="search">发现</van-tabbar-item>
-      <van-tabbar-item replace to="/chatFront" icon="envelop-o">信息</van-tabbar-item>
+      <van-tabbar-item replace to="/chatFront/index" icon="envelop-o">信息</van-tabbar-item>
       <van-tabbar-item replace to="/personal" icon="manager-o">我的</van-tabbar-item>
     </van-tabbar>
   </div>
@@ -17,18 +19,21 @@ export default {
     return {
       // 未读的信息总数
       messageNumber: 0,
-      exclude: ['/personalInfo', '/setting', '/login', '/register']
+      exclude: ['/personalInfo', '/setting', '/login', '/register', '/changeGender', '/changeArea', '/changeNickname',
+        '/changeAccount', '/changeIntroduction', '/createBlog', '/follower', '/fans', '/group/notice']
     }
   },
   async created () {
     // 进入网站就向后端发请求是否已经登录
-    const { data: res } = await this.$http.get('/users/avatars', this.$store.state.headers)
+    const { data: res } = await this.$http.get('/users', this.$store.state.headers)
     // 如果登录
+    console.log(res)
     if (res.code === 20001) {
       // 开启websocket连接
       const webSocket = new WebSocket(this.$webSocketUrl + '/loginInfoWebSocket')
       // 设置登录状态为true
       this.$store.commit('setStatus', true)
+      this.$store.commit('setInfo', res.data)
       // 登录后将得到的用户id传给后端, 从而将自己上线的信息推送上去
       webSocket.onopen = function () {
         const data = { userId: res.data.id }

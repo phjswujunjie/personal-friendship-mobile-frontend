@@ -5,11 +5,15 @@
       left-text="返回"
       left-arrow
       @click-left="onClickLeft"
+      style="background-color: #ebedf0"
     />
     <div>
-      <van-cell-group style="margin-top: 10px">
+      <van-cell-userGroup>
+        <van-cell title="账号与安全"/>
+      </van-cell-userGroup>
+      <van-cell-userGroup style="margin-top: 10px">
         <van-cell title="退出登录" @click="logOut"/>
-      </van-cell-group>
+      </van-cell-userGroup>
     </div>
   </div>
 </template>

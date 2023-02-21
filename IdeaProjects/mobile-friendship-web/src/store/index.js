@@ -11,7 +11,8 @@ export default new Vuex.Store({
       }
     },
     status: false,
-    info: null
+    info: null,
+    replyInfo: null
   },
   getters: {
   },
@@ -21,6 +22,9 @@ export default new Vuex.Store({
     },
     setInfo (state, data) {
       state.info = data
+    },
+    setReplyInfo (state, data) {
+      state.replyInfo = data
     }
   },
   actions: {
